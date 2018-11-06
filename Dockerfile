@@ -105,8 +105,8 @@ RUN apt-get update \
  && apt-get clean \
  && rm -fr /var/lib/apt/lists/*
 
-# RUN pip install --no-cache https://github.com/ausecocloud/ecocloud_wps_demo/archive/aa8945d4b8d217c4c0a644b940532762751a920e.zip
-RUN pip install --no-cache https://github.com/manhinli/ecocloud_wps_demo/archive/1a8e52aefed03bfc213f9790d6ac10fbcc203605.zip
+# RUN pip install --no-cache https://github.com/ausecocloud/ecocloud_wps_demo/archive/f09b87fe0431b56c8ad29c362f4e82d61683958e.zip
+RUN pip install --no-cache https://github.com/manhinli/ecocloud_wps_demo/archive/f09b87fe0431b56c8ad29c362f4e82d61683958e.zip
 
 COPY pywps.cfg /etc/ecocloud/pywps.cfg
 COPY development.ini /etc/ecocloud/wps.ini
