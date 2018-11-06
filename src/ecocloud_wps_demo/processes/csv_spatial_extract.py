@@ -42,9 +42,9 @@ class CSVSpatialExtract(Process):
                           supported_formats=[Format('text/csv')]),
         ]
 
-        super(SpatialSubset, self).__init__(
+        super(CSVSpatialExtract, self).__init__(
             self._handler,
-            identifier='spatial_subset',
+            identifier='csv_spatial_subset',
             title='NetCDF data spatial subset',
             abstract="Subsets a given NetCDF dataset with given spatial data/geometry",
             version='1',
