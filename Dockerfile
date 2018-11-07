@@ -105,7 +105,7 @@ RUN apt-get update \
  && apt-get clean \
  && rm -fr /var/lib/apt/lists/*
 
-RUN pip install --no-cache https://github.com/ausecocloud/ecocloud_wps_demo/archive/5488e5486e4234f16f683480bf81c8a36d3b19ba.zip
+RUN pip install --no-cache https://github.com/ausecocloud/ecocloud_wps_demo/archive/50f1b3106e68e22f2cd865cf689695a1f379888c.zip
 # RUN pip install --no-cache https://github.com/manhinli/ecocloud_wps_demo/archive/1e9672b8a73211b5f18af4baab6c67169861cbea.zip
 
 # Create jovyan user with UID=1000 and in the 'users' group
