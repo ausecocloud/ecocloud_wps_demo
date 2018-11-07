@@ -51,7 +51,7 @@ class SpatialSubset(Process):
         # Subset geometry
         geometry_zip_input = request.inputs['shapefile'][0]
         geometry_zip = ZipFile(geometry_zip_input.file)
-        
+
         # Extract to subdirectory, pick out the SHP file
         geometry_dir = os.path.join(self.workdir, '_geometry')
         geometry_zip.extractall(path=geometry_dir)
