@@ -2,7 +2,7 @@
 
 PREFIX = hub.bccvl.org.au/ecocloud
 IMAGE = ecocloud_wps_demo
-TAG ?= 0.0.1
+TAG ?= 0.0.2
 
 build:
 	docker build -t $(PREFIX)/$(IMAGE):$(TAG) .

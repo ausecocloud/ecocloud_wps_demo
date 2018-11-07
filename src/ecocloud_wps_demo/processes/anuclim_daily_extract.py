@@ -1,6 +1,8 @@
 import csv
 import datetime
+from itertools import takewhile, repeat
 import logging
+import operator
 import os
 
 from pydap.client import open_url
@@ -15,7 +17,7 @@ from pywps.validator.mode import MODE
 data = {
     'rainfall': {
         'url': 'http://dapds00.nci.org.au/thredds/dodsC/rr9/eMAST_data/ANUClimate/ANUClimate_v1-0_rainfall_daily_0-01deg_1970-2014',
-        'variable' : 'lwe_thickness_of_precipitation_amount',
+        'variable': 'lwe_thickness_of_precipitation_amount',
     },
     'temp_max': {
         'url': 'http://dapds00.nci.org.au/thredds/dodsC/rr9/eMAST_data/ANUClimate/ANUClimate_v1-1_temperature-max_daily_0-01deg_1970-2014',
@@ -77,12 +79,22 @@ class ANUClimDailyExtract(Process):
             #       birdy asks for status, but pywps process says no to it and fails the request
             status_supported=True)
 
+    def _count_lines(self, filename):
+        f = open(filename, 'rb')
+        bufgen = takewhile(operator.truth,
+                           (f.raw.read(1024 * 1024) for _ in repeat(None)))
+        return sum(buf.count(b'\n') for buf in bufgen if buf)
+
     def _handler(self, request, response):
         # import pdb; pdb.set_trace()
         # Get the NetCDF file
         log = logging.getLogger(__name__)
         variables = [v.data for v in request.inputs['variables']]  # Note that all input parameters require index access
         dataset_csv = request.inputs['csv'][0]
+
+        lines = self._count_lines(dataset_csv.file) - 1  # don't count header
+        count = 0
+        next_update = 0
 
         csv_fp = open(dataset_csv.file, 'r')
         csv_reader = csv.reader(csv_fp)
@@ -118,15 +130,15 @@ class ANUClimDailyExtract(Process):
             grid_data = grid[data[var]['variable']]
             # store data
             datasets[var] = {
-              'ds': ds,
-              'data': grid_data,
-              'var': data[var]['variable'],
-              'lats': lats,
-              'lons': lons,
-              'times': times,
-              'lon_min': lon_min, 'lon_max': lon_max,
-              'lat_min': lat_min, 'lat_max': lat_max,
-              'time_min': time_min, 'time_max': time_max,
+                'ds': ds,
+                'data': grid_data,
+                'var': data[var]['variable'],
+                'lats': lats,
+                'lons': lons,
+                'times': times,
+                'lon_min': lon_min, 'lon_max': lon_max,
+                'lat_min': lat_min, 'lat_max': lat_max,
+                'time_min': time_min, 'time_max': time_max,
             }
 
         # append variables to csv header
@@ -135,10 +147,14 @@ class ANUClimDailyExtract(Process):
 
         # produce output file
         with open(os.path.join(self.workdir, 'out.csv'), 'w') as fp:
+            # set output file
+            response.outputs['output'].file = fp.name
+            # start processing
             csv_writer = csv.writer(fp)
             csv_writer.writerow(csv_header)
             # iterate through input csv
             for row in csv_reader:
+                count += 1  # incr. line read rounter
                 try:
                     # get coordinates from csv
                     edate = datetime.datetime.strptime(row[csv_header_idx['date']].strip(), '%Y-%m-%d').timestamp()
@@ -168,6 +184,15 @@ class ANUClimDailyExtract(Process):
                     for var in variables:
                         row.append('')
                 csv_writer.writerow(row)
-            # response.outputs['output'].file = fp.name
-        response.outputs['output'].data = open(os.path.join(self.workdir, 'out.csv'), 'r').read()
+                # done processing current line ...
+                # update progress status
+                percent = int(count / lines * 100)
+                # don't re-generate status doc after every single line
+                if (percent >= next_update):
+                    next_update += 5
+                    response.update_status(
+                        'Processed lines {} of {} so far...'.format(count, lines),
+                        percent
+                    )
+
         return response
