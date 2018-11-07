@@ -164,8 +164,9 @@ class ANUClimDailyExtract(Process):
                         value = datasets[var]['data'][edate_idx, lat_idx, lon_idx]
                         row.append(value.data[0][0][0])
                 except Exception as e:
-                    log.warn('Skipping Row: {}'.format(e))
-                    continue
+                    log.warn('Filling Row with empty values: {}'.format(e))
+                    for var in variables:
+                        row.append('')
                 csv_writer.writerow(row)
             # response.outputs['output'].file = fp.name
         response.outputs['output'].data = open(os.path.join(self.workdir, 'out.csv'), 'r').read()
