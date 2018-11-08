@@ -146,9 +146,9 @@ class ANUClimDailyExtract(Process):
             csv_header.append(var)
 
         # produce output file
-        with open(os.path.join(self.workdir, 'out.csv'), 'w') as fp:
-            # set output file
-            response.outputs['output'].file = fp.name
+        # TODO: may want to use resoponse.outputs['output'].workdir here
+        out_csv = os.path.join(self.workdir, 'out.csv')
+        with open(out_csv, 'w') as fp:
             # start processing
             csv_writer = csv.writer(fp)
             csv_writer.writerow(csv_header)
@@ -194,5 +194,9 @@ class ANUClimDailyExtract(Process):
                         'Processed lines {} of {} so far...'.format(count, lines),
                         percent
                     )
-
+        # set output file
+        # NOTE: assigning to output.file needs to be done after output file
+        #       is finished. Assignment here copies the file to the outputs
+        #       folder.
+        response.outputs['output'].file = out_csv
         return response
