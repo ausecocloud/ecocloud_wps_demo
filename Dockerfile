@@ -105,7 +105,7 @@ RUN apt-get update \
  && apt-get clean \
  && rm -fr /var/lib/apt/lists/*
 
-RUN pip install --no-cache https://github.com/ausecocloud/ecocloud_wps_demo/archive/e81e00af89680eb444b04debdb93b39161efd03a.zip
+RUN pip install --no-cache https://github.com/ausecocloud/ecocloud_wps_demo/archive/0053d70a271bfcbcf0b9182d5082772abea01814.zip
 
 # Create jovyan user with UID=1000 and in the 'users' group
 # and make sure these dirs are writable by the `users` group.
