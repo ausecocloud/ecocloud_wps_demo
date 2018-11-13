@@ -97,7 +97,7 @@ RUN apt-get update \
 RUN apt-get update \
  && apt-get -yq --allow-unauthenticated install --no-install-recommends gcc g++ libgdal-dev \
  && pip install --no-cache --global-option=build_ext --global-option="-I/usr/include/gdal" 'gdal==2.3.*' \
- && pip install --no-cache netCDF4==1.3.1 pydap PasteScript pyramid waitress gunicorn \
+ && pip install --no-cache netCDF4==1.3.1 pydap PasteScript pyramid waitress gunicorn Fiona rasterio \
  && pip install --no-cache https://github.com/ausecocloud/pywps/archive/21c23efb27ac3bf769d3101c58f972addb6542f5.zip \
  && pip install --no-cache https://github.com/NCPP/ocgis/archive/b00dd591df47467fabe5f9894cc7ab3e6e209bf0.zip \
  && apt-get -y purge gcc g++ libgdal-dev \

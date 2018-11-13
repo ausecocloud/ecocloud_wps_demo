@@ -5,11 +5,13 @@ from pywps import Service
 
 from ecocloud_wps_demo.processes.anuclim_daily_extract import ANUClimDailyExtract
 from ecocloud_wps_demo.processes.spatial_subset import SpatialSubset
+from ecocloud_wps_demo.processes.spatial_subset_geotiff import SpatialSubsetGeotiff
 
 
 processes = [
     ANUClimDailyExtract(),
     SpatialSubset(),
+    SpatialSubsetGeotiff(),
 ]
 
 
