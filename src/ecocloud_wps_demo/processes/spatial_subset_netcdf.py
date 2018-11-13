@@ -9,7 +9,7 @@ from pywps.validator.mode import MODE
 
 import ocgis
 
-class SpatialSubset(Process):
+class SpatialSubsetNetcdf(Process):
     def __init__(self):
         inputs = [
             ComplexInput('dataset', 'NetCDF Dataset',
@@ -31,9 +31,9 @@ class SpatialSubset(Process):
                           supported_formats=[Format('text/plain')]),
         ]
 
-        super(SpatialSubset, self).__init__(
+        super(SpatialSubsetNetcdf, self).__init__(
             self._handler,
-            identifier='spatial_subset',
+            identifier='spatial_subset_netcdf',
             title='NetCDF data spatial subset',
             abstract="Subsets a given NetCDF dataset with given spatial data/geometry",
             version='1',
