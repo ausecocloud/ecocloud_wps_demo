@@ -36,11 +36,19 @@ setup(
         'setuptools',
         'pyramid',
         'pywps',
+        'python-swiftclient',
+        'python-keystoneclient'
     ],
     entry_points={
         'paste.app_factory': [
             'main = ecocloud_wps_demo:main',
         ],
+        'pywps_processing': [
+            'threads = ecocloud_wps_demo.pywps.processing:ThreadProcessing',
+        ],
+        'pywps_storage': [
+            'SwiftStorage = ecocloud_wps_demo.pywps.storage:SwiftStorage',
+        ]
     },
 
 )

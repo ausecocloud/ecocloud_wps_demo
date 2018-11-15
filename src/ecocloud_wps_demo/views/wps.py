@@ -4,14 +4,16 @@ from pyramid.wsgi import wsgiapp2
 from pywps import Service
 
 from ecocloud_wps_demo.processes.anuclim_daily_extract import ANUClimDailyExtract
-from ecocloud_wps_demo.processes.spatial_subset_netcdf import SpatialSubsetNetcdf
+from ecocloud_wps_demo.processes.anuclim_daily_extract_netcdf4 import ANUClimDailyExtractNetCDF4
 from ecocloud_wps_demo.processes.spatial_subset_geotiff import SpatialSubsetGeotiff
+from ecocloud_wps_demo.processes.spatial_subset_netcdf import SpatialSubsetNetcdf
 
 
 processes = [
     ANUClimDailyExtract(),
-    SpatialSubsetNetcdf(),
+    ANUClimDailyExtractNetCDF4(),
     SpatialSubsetGeotiff(),
+    SpatialSubsetNetcdf(),
 ]
 
 
