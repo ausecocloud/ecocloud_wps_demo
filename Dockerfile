@@ -98,14 +98,14 @@ RUN apt-get update \
  && apt-get -yq --allow-unauthenticated install --no-install-recommends gcc g++ libgdal-dev \
  && pip install --no-cache --global-option=build_ext --global-option="-I/usr/include/gdal" 'gdal==2.3.*' \
  && pip install --no-cache netCDF4==1.3.1 pydap PasteScript pyramid waitress gunicorn Fiona rasterio \
- && pip install --no-cache https://github.com/ausecocloud/pywps/archive/21c23efb27ac3bf769d3101c58f972addb6542f5.zip \
+ && pip install --no-cache https://github.com/ausecocloud/pywps/archive/e5e632d6ac4a04b0b076e841781c9b37e3f0dccb.zip \
  && pip install --no-cache https://github.com/NCPP/ocgis/archive/b00dd591df47467fabe5f9894cc7ab3e6e209bf0.zip \
  && apt-get -y purge gcc g++ libgdal-dev \
  && apt -y autoremove \
  && apt-get clean \
  && rm -fr /var/lib/apt/lists/*
 
-RUN pip install --no-cache https://github.com/ausecocloud/ecocloud_wps_demo/archive/0053d70a271bfcbcf0b9182d5082772abea01814.zip
+RUN pip install --no-cache https://github.com/ausecocloud/ecocloud_wps_demo/archive/8bea11b7ba7746b34260c3b6f0f16f4882652b99.zip
 
 # Create jovyan user with UID=1000 and in the 'users' group
 # and make sure these dirs are writable by the `users` group.

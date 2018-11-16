@@ -10,6 +10,8 @@ from swiftclient.service import SwiftService, SwiftUploadObject
 
 
 def get_temp_url_key():
+    # TODO: we could just read temp_url_key from container as well
+    #       swift.stat(container)['headers']['x-container-meta-temp-url-key']
     return (
         config.get_config_value('SwiftStorage', 'temp_url_key')
         or os.environ['TEMP_URL_KEY']
