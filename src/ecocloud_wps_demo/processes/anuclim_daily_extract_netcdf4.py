@@ -175,6 +175,8 @@ class ANUClimDailyExtractNetCDF4(Process):
                         value = datasets[var]['data'][edate_idx, lat_idx, lon_idx]
                         row.append(value.item())
                 except Exception as e:
+                    # FIXME: this may also be reached due to an I/O Error ....
+                    #        e.g. 'NetCDF: I/O failure' ... what type of exception would that be?
                     log.warn('Filling Row with empty values: {}'.format(e))
                     for var in variables:
                         row.append('')

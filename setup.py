@@ -47,7 +47,7 @@ setup(
             'threads = ecocloud_wps_demo.pywps.processing:ThreadProcessing',
         ],
         'pywps_storage': [
-            'SwiftStorage = ecocloud_wps_demo.pywps.storage:SwiftStorage',
+            'SwiftStorage = ecocloud_wps_demo.pywps.swiftstorage:SwiftStorage',
         ]
     },
 
