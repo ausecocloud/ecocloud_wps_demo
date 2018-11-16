@@ -1,4 +1,5 @@
 import logging
+import os
 import os.path
 import uuid
 
@@ -8,6 +9,13 @@ from pywps.inout.storage import CachedStorage
 from swiftclient.service import SwiftService, SwiftUploadObject
 
 
+def get_temp_url_key():
+    return (
+        config.get_config_value('SwiftStorage', 'temp_url_key')
+        or os.environ['TEMP_URL_KEY']
+    )
+
+
 class SwiftStorage(CachedStorage):
 
     def __init__(self):
@@ -15,7 +23,7 @@ class SwiftStorage(CachedStorage):
         """
         super().__init__()
         self.output_url = config.get_config_value('server', 'outputurl')
-        self.temp_url_key = config.get_config_value('SwiftStorage', 'TEMP_URL_KEY')
+        self.temp_url_key = get_temp_url_key()
         self.container = config.get_config_value('SwiftStorage', 'container')
         # storage timeout etc...
 
