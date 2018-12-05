@@ -14,14 +14,14 @@ import rasterio.mask
 class SpatialSubsetGeotiff(Process):
     def __init__(self):
         inputs = [
-            ComplexInput('file', 'GeoTIFF file',
+            ComplexInput('datafile', 'GeoTIFF datafile',
                          supported_formats=[Format('image/tiff')],
-                         min_occurs=0, max_occurs=1,
+                         min_occurs=1, max_occurs=1,
                          # NOTE: Can't validate GeoTIFFs at the moment
                          mode=MODE.NONE),
             ComplexInput('shapefile', '.zip file representing ESRI Shapefile of geometry to use for subset',
                          supported_formats=[Format('application/zip')],
-                         min_occurs=0, max_occurs=1,
+                         min_occurs=1, max_occurs=1,
                          # NOTE: No validator for ZIP files
                          mode=MODE.NONE),
         ]

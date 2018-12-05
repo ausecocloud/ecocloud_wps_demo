@@ -12,13 +12,13 @@ import ocgis
 class SpatialSubsetNetcdf(Process):
     def __init__(self):
         inputs = [
-            ComplexInput('dataset', 'NetCDF Dataset',
+            ComplexInput('datafile', 'NetCDF datafile',
                          supported_formats=[Format('application/x-netcdf')],
-                         min_occurs=0, max_occurs=1,
+                         min_occurs=1, max_occurs=1,
                          mode=MODE.STRICT),
             ComplexInput('shapefile', '.zip file representing ESRI Shapefile of geometry to use for subset',
                          supported_formats=[Format('application/zip')],
-                         min_occurs=0, max_occurs=1,
+                         min_occurs=1, max_occurs=1,
                          # NOTE: No validator for ZIP files
                          mode=MODE.NONE),
             LiteralInput('variable', 'Variable to subset',
