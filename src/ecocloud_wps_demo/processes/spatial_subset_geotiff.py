@@ -27,7 +27,7 @@ class SpatialSubsetGeotiff(Process):
         ]
 
         outputs = [
-            ComplexOutput('output', 'Metadata',
+            ComplexOutput('output', 'Output data',
                           as_reference=True,
                           supported_formats=[Format('text/plain')]),
         ]
