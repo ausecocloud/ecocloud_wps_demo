@@ -1,7 +1,6 @@
 import logging
 import os
-from glob import glob
-from zipfile import ZipFile
+from math import ceil
 
 from pywps import Process
 from pywps import ComplexInput, LiteralInput, ComplexOutput, Format
@@ -74,14 +73,22 @@ class ExploratoryDataBox(Process):
         csv_df = pd.read_csv(csv_filepath, usecols=variables).apply(
             pd.to_numeric, errors='coerce')
 
+        # Subplot grid is maximum 2 columns wide, with plots in a Z arrangement
+        subplot_cols = 2 if variables_count > 1 else 1
+        subplot_rows = ceil(variables_count / 2)
+
         for idx, var in enumerate(variables):
             # Drop NA/NaNs which poison the plot or cause it to throw
             column_data = csv_df[var].dropna()
 
-            # TODO: Calculate best arrangement
-            axes = figure.add_subplot(1, variables_count, idx + 1)
+            # Draw subplot
+            axes = figure.add_subplot(subplot_rows, subplot_cols, idx + 1)
             axes.set_title(var)
             axes.boxplot(column_data)
+
+            # Clean up plot by removing unnecessary stuff
+            axes.tick_params(axis='x', which='both',
+                             bottom=False, labelbottom=False)
 
         # Write the overall figure with subplots into output file
         output_path = os.path.join(self.workdir, "output.png")
