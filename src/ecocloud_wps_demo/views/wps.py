@@ -8,6 +8,7 @@ from ecocloud_wps_demo.processes.anuclim_daily_extract_netcdf4 import ANUClimDai
 from ecocloud_wps_demo.processes.spatial_subset_geotiff import SpatialSubsetGeotiff
 from ecocloud_wps_demo.processes.spatial_subset_netcdf import SpatialSubsetNetcdf
 from ecocloud_wps_demo.processes.exploratory_data_box import ExploratoryDataBox
+from ecocloud_wps_demo.processes.exploratory_data_histogram import ExploratoryDataHistogram
 
 
 processes = [
@@ -16,6 +17,7 @@ processes = [
     SpatialSubsetGeotiff(),
     SpatialSubsetNetcdf(),
     ExploratoryDataBox(),
+    ExploratoryDataHistogram(),
 ]
 
 
