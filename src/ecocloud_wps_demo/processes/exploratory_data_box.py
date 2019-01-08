@@ -54,8 +54,6 @@ class ExploratoryDataBox(Process):
         variables_count = len(variables)
 
         # Plot into subplots, one per variable
-        file_path = "/tmp/output.png"
-
         figure = plt.figure()
 
         # Read only the columns we need from the CSV
@@ -63,6 +61,7 @@ class ExploratoryDataBox(Process):
             pd.to_numeric, errors='coerce')
 
         for idx, var in enumerate(variables):
+            # Drop NA/NaNs which poison the plot or cause it to throw
             column_data = csv_df[var].dropna()
 
             # TODO: Calculate best arrangement
@@ -70,9 +69,10 @@ class ExploratoryDataBox(Process):
             axes.boxplot(column_data)
 
         # Write the overall figure with subplots into output file
-        figure.savefig(file_path)
+        output_path = os.path.join(self.workdir, "output.png")
+        figure.savefig(output_path)
 
         # Finish up by providing the path to the file
-        response.outputs['output'].file = file_path
+        response.outputs['output'].file = output_path
 
         return response
