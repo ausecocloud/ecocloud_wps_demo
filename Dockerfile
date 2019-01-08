@@ -96,10 +96,10 @@ RUN apt-get update \
 
 RUN apt-get update \
  && apt-get -yq --allow-unauthenticated install --no-install-recommends gcc g++ libgdal-dev \
- && pip install --no-cache --default-timeout=100 --global-option=build_ext --global-option="-I/usr/include/gdal" 'gdal==2.3.*' \
- && pip install --no-cache --default-timeout=100 netCDF4==1.3.1 pydap PasteScript pyramid waitress gunicorn Fiona rasterio pandas matplotlib scipy \
- && pip install --no-cache --default-timeout=100 https://github.com/ausecocloud/pywps/archive/2451e6f2e34f815141bf35d24a99a2d817d6136c.zip \
- && pip install --no-cache --default-timeout=100 https://github.com/NCPP/ocgis/archive/b00dd591df47467fabe5f9894cc7ab3e6e209bf0.zip \
+ && pip install --no-cache --global-option=build_ext --global-option="-I/usr/include/gdal" 'gdal==2.3.*' \
+ && pip install --no-cache netCDF4==1.3.1 pydap PasteScript pyramid waitress gunicorn Fiona rasterio pandas matplotlib scipy seaborn \
+ && pip install --no-cache https://github.com/ausecocloud/pywps/archive/2451e6f2e34f815141bf35d24a99a2d817d6136c.zip \
+ && pip install --no-cache https://github.com/NCPP/ocgis/archive/b00dd591df47467fabe5f9894cc7ab3e6e209bf0.zip \
  && apt-get -y purge gcc g++ libgdal-dev \
  && apt -y autoremove \
  && apt-get clean \
