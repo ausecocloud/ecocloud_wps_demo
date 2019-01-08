@@ -10,6 +10,7 @@ from ecocloud_wps_demo.processes.spatial_subset_netcdf import SpatialSubsetNetcd
 from ecocloud_wps_demo.processes.exploratory_data_box import ExploratoryDataBox
 from ecocloud_wps_demo.processes.exploratory_data_histogram import ExploratoryDataHistogram
 from ecocloud_wps_demo.processes.exploratory_data_density import ExploratoryDataDensity
+from ecocloud_wps_demo.processes.exploratory_data_correlation import ExploratoryDataCorrelation
 
 
 processes = [
@@ -20,6 +21,7 @@ processes = [
     ExploratoryDataBox(),
     ExploratoryDataHistogram(),
     ExploratoryDataDensity(),
+    ExploratoryDataCorrelation(),
 ]
 
 
