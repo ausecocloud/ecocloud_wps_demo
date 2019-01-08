@@ -27,6 +27,11 @@ class ExploratoryDataBox(Process):
                 data_type='string', min_occurs=1, max_occurs=4,
                 mode=MODE.SIMPLE
             ),
+            LiteralInput(
+                'title', 'Title of plot',
+                data_type='string', min_occurs=0, max_occurs=1,
+                mode=MODE.SIMPLE
+            ),
         ]
 
         outputs = [
@@ -53,8 +58,17 @@ class ExploratoryDataBox(Process):
         variables = [v.data for v in request.inputs['variable']]
         variables_count = len(variables)
 
+        try:
+            title = request.inputs['title'][0].data
+        except:
+            title = None
+
         # Plot into subplots, one per variable
         figure = plt.figure()
+
+        # Set title where provided
+        if title is not None:
+            figure.suptitle(title)
 
         # Read only the columns we need from the CSV
         csv_df = pd.read_csv(csv_filepath, usecols=variables).apply(
@@ -66,6 +80,7 @@ class ExploratoryDataBox(Process):
 
             # TODO: Calculate best arrangement
             axes = figure.add_subplot(1, variables_count, idx + 1)
+            axes.set_title(var)
             axes.boxplot(column_data)
 
         # Write the overall figure with subplots into output file
